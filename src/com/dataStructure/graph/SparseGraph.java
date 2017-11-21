@@ -15,6 +15,8 @@ public class SparseGraph implements Graph {
         this.edgeCount = 0;
         this.directed = directed;
         adjacencyTable = (ArrayList<Integer>[]) new ArrayList[vertexCount];
+        for (int i = 0; i < adjacencyTable.length; i++)
+            adjacencyTable[i] = new ArrayList<>();
     }
 
     public int E() {
@@ -55,7 +57,6 @@ public class SparseGraph implements Graph {
         }
     }
 }
-
 
 
 // 使用 邻接表 表示 稀疏图
