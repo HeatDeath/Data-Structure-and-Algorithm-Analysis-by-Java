@@ -2,6 +2,8 @@ package com.leetcode.sort;
 
 import java.util.Arrays;
 
+// 88 Merge Sorted Array
+
 public class MergeSortedArray {
     // 简单的归并排序思路
     public void merge(int[] nums1, int m, int[] nums2, int n) {

@@ -10,35 +10,26 @@ public class QuickSort {
     }
 
     private static void sort(Integer[] arr, int l, int r) {
-//        if (l >= r) return;
-        // 优化 对于小规模数组使用插入排序
-        if (r-l <= 15){
-            InsertionSort.sort(arr, l, r);
-            return;
-        }
+        if (l >= r) return;
         int p = partition(arr, l, r);
         sort(arr, l, p - 1);
         sort(arr, p + 1, r);
     }
 
     private static int partition(Integer[] arr, int l, int r) {
-        // 优化，随机快速排序
-        SortTestHelper.swap(arr, l, (int)(Math.random()*(r-l) + l));
-
+        SortTestHelper.swap(arr, l, (int) (Math.random() * (r - l + 1) + l));
         Integer temp = arr[l];
         int i = l + 1, j = l;
         for (; i <= r; i++) {
-            if (arr[i] < temp) {
-                j++;
-                SortTestHelper.swap(arr, i, j);
-            }
+            if (arr[i] < temp)
+                SortTestHelper.swap(arr, i, ++j);
         }
-        SortTestHelper.swap(arr, j, l);
+        SortTestHelper.swap(arr, l, j);
         return j;
     }
 
     public static void main(String[] args) {
-        int N = 1000000;
+        int N = 100;
         Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 10000);
 
         System.out.println("排序前的数组为：");
