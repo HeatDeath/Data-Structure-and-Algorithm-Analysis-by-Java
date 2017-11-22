@@ -10,37 +10,56 @@ public class QuickSortThreeWays {
     }
 
     private static void sort(Integer[] arr, int l, int r) {
-        if (r - l <= 15) {
-            InsertionSort.sort(arr, l, r);
-            return;
-        }
+        if (l >= r) return;
 
         SortTestHelper.swap(arr, l, (int) (Math.random() * (r - l + 1) + l));
         Integer temp = arr[l];
-        // arr[l+1...lt] < temp
-        // arr[lt+1...i-1] == temp
-        // arr[gt...r] > temp
         int i = l + 1, lt = l, gt = r + 1;
         while (i < gt) {
-            if (arr[i] < temp) {
-                lt++;
-                SortTestHelper.swap(arr, i, lt);
+            if (arr[i] < temp)
+                SortTestHelper.swap(arr, i++, ++lt);
+            else if (arr[i] > temp)
+                SortTestHelper.swap(arr, i, --gt);
+            else
                 i++;
-            } else if (arr[i] > temp) {
-                gt--;
-                SortTestHelper.swap(arr, i, gt);
-            } else { // arr[i] == temp
-                i++;
-            }
         }
-        SortTestHelper.swap(arr, l, lt);
-        sort(arr, l, lt-1);
+        SortTestHelper.swap(arr, lt, l);
+        sort(arr, l, lt - 1);
         sort(arr, gt, r);
     }
 
+//    private static void sort(Integer[] arr, int l, int r) {
+//        if (r - l <= 15) {
+//            InsertionSort.sort(arr, l, r);
+//            return;
+//        }
+//
+//        SortTestHelper.swap(arr, l, (int) (Math.random() * (r - l + 1) + l));
+//        Integer temp = arr[l];
+//        // arr[l+1...lt] < temp
+//        // arr[lt+1...i-1] == temp
+//        // arr[gt...r] > temp
+//        int i = l + 1, lt = l, gt = r + 1;
+//        while (i < gt) {
+//            if (arr[i] < temp) {
+//                lt++;
+//                SortTestHelper.swap(arr, i, lt);
+//                i++;
+//            } else if (arr[i] > temp) {
+//                gt--;
+//                SortTestHelper.swap(arr, i, gt);
+//            } else { // arr[i] == temp
+//                i++;
+//            }
+//        }
+//        SortTestHelper.swap(arr, l, lt);
+//        sort(arr, l, lt-1);
+//        sort(arr, gt, r);
+//    }
+
     public static void main(String[] args) {
-        int N = 800000;
-        Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 100000);
+        int N = 2;
+        Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 100);
 
         System.out.println("排序前的数组为：");
         SortTestHelper.printArray(arr);
