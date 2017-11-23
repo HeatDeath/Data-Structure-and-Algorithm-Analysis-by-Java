@@ -29,8 +29,8 @@ public class QuickSort {
     }
 
     public static void main(String[] args) {
-        int N = 100;
-        Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 10000);
+        int N = 10000;
+        Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 10000000);
 
         System.out.println("排序前的数组为：");
         SortTestHelper.printArray(arr);
