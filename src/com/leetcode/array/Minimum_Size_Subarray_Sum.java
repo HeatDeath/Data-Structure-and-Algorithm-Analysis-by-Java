@@ -4,23 +4,16 @@ package com.leetcode.array;
 
 public class Minimum_Size_Subarray_Sum {
     public int minSubArrayLen(int s, int[] nums) {
-        int l = 0;
-        int r = -1;
-        int sum = 0;
-        int minLength = nums.length + 1;
-        while (l < nums.length) {
-            if (r < nums.length - 1 && sum < s)
-                sum += nums[++r];
-            else
-                sum -= nums[l++];
-            if (sum >= s)
-                minLength = Math.min(minLength, r - l + 1);
+        if (nums == null || nums.length == 0) return 0;
+        int l = 0, r = 0, sum = 0, minLength = Integer.MAX_VALUE;
+        while (r < nums.length) {   // 当 r 指针未越界
+            sum += nums[r++];   // sum 加上滑动窗口最右侧的元素， r 指针右移
+            while (sum >= s) {  // 当 sum >= s
+                minLength = Math.min(minLength, r-l); // 更新 minLength
+                sum -= nums[l++];   // sum 去掉滑动窗口的最左侧元素， l 指针右移
+            }
         }
-
-        if (minLength == nums.length + 1)
-            return 0;
-
-        return minLength;
+        return minLength == Integer.MAX_VALUE ? 0 : minLength;
 
     }
 
@@ -49,7 +42,7 @@ public class Minimum_Size_Subarray_Sum {
     public static void main(String[] args) {
 
         int[] nums = {2, 3, 1, 2, 4, 3};
-        int s = 8;
+        int s = 5;
         System.out.println((new Minimum_Size_Subarray_Sum()).minSubArrayLen(s, nums));
     }
 
