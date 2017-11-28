@@ -1,7 +1,7 @@
 package com.practice.sort;
 
-public class QuickSortThreeWays {
-    private QuickSortThreeWays() {
+public class QuickSort_3Ways {
+    private QuickSort_3Ways() {
     }
 
     public static void sort(Integer[] arr) {
@@ -11,10 +11,9 @@ public class QuickSortThreeWays {
 
     private static void sort(Integer[] arr, int l, int r) {
         if (l >= r) return;
-
         SortTestHelper.swap(arr, l, (int) (Math.random() * (r - l + 1) + l));
         Integer temp = arr[l];
-        int i = l + 1, lt = l, gt = r + 1;
+        int lt = l, gt = r+1, i = l + 1;
         while (i < gt) {
             if (arr[i] < temp)
                 SortTestHelper.swap(arr, i++, ++lt);
@@ -24,7 +23,7 @@ public class QuickSortThreeWays {
                 i++;
         }
         SortTestHelper.swap(arr, lt, l);
-        sort(arr, l, lt - 1);
+        sort(arr, l, lt -1);
         sort(arr, gt, r);
     }
 
@@ -58,13 +57,13 @@ public class QuickSortThreeWays {
 //    }
 
     public static void main(String[] args) {
-        int N = 2;
-        Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 100);
+        int N = 8000;
+        Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 1000000);
 
         System.out.println("排序前的数组为：");
         SortTestHelper.printArray(arr);
         Long start = System.currentTimeMillis();
-        QuickSortThreeWays.sort(arr);
+        QuickSort_3Ways.sort(arr);
         Long end = System.currentTimeMillis();
         System.out.println("-------------------------------------------");
 

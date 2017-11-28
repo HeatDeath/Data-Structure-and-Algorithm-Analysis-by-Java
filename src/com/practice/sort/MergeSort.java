@@ -13,11 +13,11 @@ public class MergeSort {
 
     private static void sort(Integer[] arr, int l, int r) {
         if (l >= r) return;
-
-        int mid = (l + r) / 2;
+        int mid = (r - l) / 2 + l;
         sort(arr, l, mid);
         sort(arr, mid + 1, r);
-        merge(arr, l, mid, r);
+        if (arr[mid] > arr[mid + 1])
+            merge(arr, l, mid, r);
     }
 
     private static void merge(Integer[] arr, int l, int mid, int r) {
@@ -30,19 +30,20 @@ public class MergeSort {
             } else if (j > r) {
                 arr[k] = aux[i - l];
                 i++;
-            } else if (aux[i-l] > aux[j-l]){
-                arr[k] = aux[j-l];
+            } else if (aux[i - l] > aux[j - l]) {
+                arr[k] = aux[j - l];
                 j++;
-            }else {
-                arr[k] = aux[i-l];
+            } else {
+                arr[k] = aux[i - l];
                 i++;
             }
         }
     }
 
+
     // 测试MergeSort
     public static void main(String[] args) {
-        int N = 40000;
+        int N = 100000;
         Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 1000000);
 
         System.out.println("排序前的数组为：");

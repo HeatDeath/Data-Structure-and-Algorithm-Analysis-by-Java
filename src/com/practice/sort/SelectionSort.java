@@ -1,4 +1,5 @@
 package com.practice.sort;
+
 /*
 * 算法思想：
 *   重复（元素个数-1）次
@@ -18,17 +19,16 @@ public class SelectionSort {
         for (int i = 0; i < n; i++) {
             int minIndex = i;
             for (int j = i + 1; j < n; j++) {
-                if (arr[j] < arr[minIndex]) {
+                if (arr[j] < arr[minIndex])
                     minIndex = j;
-                }
             }
-            SortTestHelper.swap(arr, minIndex, i);
+            SortTestHelper.swap(arr, i, minIndex);
         }
     }
 
     public static void main(String[] args) {
-        int N = 20;
-        Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 1000);
+        int N = 20000;
+        Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 1000000);
 
         System.out.println("排序前的数组为：");
         SortTestHelper.printArray(arr);

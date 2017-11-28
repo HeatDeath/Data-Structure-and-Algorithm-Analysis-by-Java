@@ -4,62 +4,47 @@ public class InsertionSort {
     private InsertionSort() {
     }
 
+//    public static void sort(Integer[] arr) {
+//        int n = arr.length;
+//        for (int i = 1; i < n; i++) {
+//            for (int j = i; j > 0; j--) {
+//                if (arr[j - 1] > arr[j]){
+//                    SortTestHelper.swap(arr, j-1, j);
+//                }
+//                else {
+//                    break;
+//                }
+//            }
+//        }
+//    }
+
     public static void sort(Integer[] arr) {
         int n = arr.length;
-        for (int i = 0; i < n; i++) {
-            for (int j = i; j > 0; j--) {
-                if (arr[j] < arr[j - 1]) {
-                    SortTestHelper.swap(arr, j, j - 1);
-                } else {
+        for (int i = 1; i < n; i++) {
+            Integer temp = arr[i];
+            int j = i;
+            for (; j > 0; j--) {
+                if (arr[j - 1] > temp)
+                    arr[j] = arr[j - 1];
+                else
                     break;
-                }
             }
+            arr[j] = temp;
         }
     }
 
-//    public static void sort(Integer[] arr) {
-//        int n = arr.length;
-//        for (int i = 0; i < n; i++) {
-//            Integer temp = arr[i];
-//            int j = i;
-//            for (; j > 0; j--) {
-//                if (arr[j - 1] > temp) {
-//                    arr[j] = arr[j - 1];
-//                }else {
-//                    break;
-//                }
-//            }
-//            arr[j] = temp;
-//        }
-//    }
-
-    //    public static void sort(Integer[] arr) {
-//        int n = arr.length;
-//        for (int i = 0; i < n; i++) {
-//            Integer temp = arr[i];
-//            int j = i;
-//            for (; j > 0; j--) {
-//                if (arr[j - 1] > temp) {
-//                    arr[j] = arr[j - 1];
-//                } else {
-//                    break;
-//                }
-//            }
-//            arr[j] = temp;
-//        }
-//    }
-//
+    // 对arr[l...r]的区间使用InsertionSort排序
     public static void sort(Integer[] arr, int l, int r) {
-        for (int i = l; i <= r; i++) {
+
+        for (int i = l + 1; i <= r; i++) {
             Integer temp = arr[i];
             int j = i;
-            for (; j > l; j--) {
-                if (arr[j - 1] > temp) {
+            for (; j > l; j--)
+                if (arr[j - 1].compareTo(temp) > 0) {
                     arr[j] = arr[j - 1];
                 } else {
                     break;
                 }
-            }
             arr[j] = temp;
         }
     }

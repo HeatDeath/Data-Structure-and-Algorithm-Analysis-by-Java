@@ -1,7 +1,7 @@
 package com.practice.sort;
 
-public class QuickSortTwoWays {
-    private QuickSortTwoWays() {
+public class QuickSort_2Ways {
+    private QuickSort_2Ways() {
     }
 
     public static void sort(Integer[] arr) {
@@ -26,9 +26,9 @@ public class QuickSortTwoWays {
                 i++;
             while (j >= l + 1 && arr[j] > temp)
                 j--;
-            if (i>j)
+            if (i > j)
                 break;
-            SortTestHelper.swap(arr,i,j);
+            SortTestHelper.swap(arr, i, j);
             i++;
             j--;
         }
@@ -37,13 +37,13 @@ public class QuickSortTwoWays {
     }
 
     public static void main(String[] args) {
-        int N = 8000;
+        int N = 800000;
         Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 100000);
 
         System.out.println("排序前的数组为：");
         SortTestHelper.printArray(arr);
         Long start = System.currentTimeMillis();
-        QuickSortTwoWays.sort(arr);
+        QuickSort_2Ways.sort(arr);
         Long end = System.currentTimeMillis();
         System.out.println("-------------------------------------------");
 

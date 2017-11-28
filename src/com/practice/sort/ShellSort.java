@@ -13,11 +13,10 @@ public class ShellSort {
                 Integer temp = arr[i];
                 int j = i;
                 for (; j >= h; j -= h) {
-                    if (arr[j - h] > temp) {
+                    if (arr[j - h] > temp)
                         arr[j] = arr[j - h];
-                    }else {
+                    else
                         break;
-                    }
                 }
                 arr[j] = temp;
             }
@@ -27,7 +26,7 @@ public class ShellSort {
 
     public static void main(String[] args) {
         int N = 10000;
-        Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 100000);
+        Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 100000000);
 
         System.out.println("排序前的数组为：");
         SortTestHelper.printArray(arr);

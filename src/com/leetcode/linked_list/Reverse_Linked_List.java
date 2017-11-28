@@ -1,7 +1,7 @@
 package com.leetcode.linked_list;
 
 
-public class reverseList {
+public class Reverse_Linked_List {
 	// 非递归写法
 //	public ListNode reverseList(ListNode head) {
 //		ListNode newHead = null;

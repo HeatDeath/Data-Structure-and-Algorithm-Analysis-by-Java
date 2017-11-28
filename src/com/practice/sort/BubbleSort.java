@@ -16,17 +16,19 @@ public class BubbleSort {
     private BubbleSort() {
     }
 
-    public static void sort(Integer[] arr){
+    public static void sort(Integer[] arr) {
         int n = arr.length;
         boolean swapped;
-        do{
+        do {
             swapped = false;
-            for (int  i =1;i<n;i++)
-                if(arr[i] < arr[i-1]){
-                    SortTestHelper.swap(arr, i, i-1);;
+            for (int i = 1; i < n; i++) {
+                if (arr[i-1] >arr[i]) {
+                    SortTestHelper.swap(arr, i, i - 1);
                     swapped = true;
                 }
-        }while(swapped);
+            }
+            n--;
+        }while (swapped);
     }
 
     public static void main(String[] args) {

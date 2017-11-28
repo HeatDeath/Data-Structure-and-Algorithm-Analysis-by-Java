@@ -20,6 +20,12 @@ public class QuickSort {
         SortTestHelper.swap(arr, l, (int) (Math.random() * (r - l + 1) + l));
         Integer temp = arr[l];
         int i = l + 1, j = l;
+//        while (i <= r) {
+//            if (arr[i] <temp){
+//                SortTestHelper.swap(arr, i, ++j);
+//            }
+//            i++;
+//        }
         for (; i <= r; i++) {
             if (arr[i] < temp)
                 SortTestHelper.swap(arr, i, ++j);
@@ -30,7 +36,7 @@ public class QuickSort {
 
     public static void main(String[] args) {
         int N = 10000;
-        Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 10000000);
+        Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 1000000);
 
         System.out.println("排序前的数组为：");
         SortTestHelper.printArray(arr);
