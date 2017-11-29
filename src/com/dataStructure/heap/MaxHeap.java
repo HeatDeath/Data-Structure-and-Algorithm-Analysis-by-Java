@@ -131,6 +131,4 @@ public class MaxHeap {
             System.out.print(maxHeap.extractMax() + " ");
         }
     }
-
-
 }
