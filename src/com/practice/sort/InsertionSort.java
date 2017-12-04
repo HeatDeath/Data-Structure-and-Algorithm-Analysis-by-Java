@@ -21,15 +21,13 @@ public class InsertionSort {
     public static void sort(Integer[] arr) {
         int n = arr.length;
         for (int i = 1; i < n; i++) {
-            Integer temp = arr[i];
-            int j = i;
-            for (; j > 0; j--) {
-                if (arr[j - 1] > temp)
-                    arr[j] = arr[j - 1];
-                else
+            for (int j = i; j >= 0; j--) {
+                if (arr[j]>arr[j-1]){
+                    SortTestHelper.swap(arr,j-1,j);
+                }else {
                     break;
+                }
             }
-            arr[j] = temp;
         }
     }
 

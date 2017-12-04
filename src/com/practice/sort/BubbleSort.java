@@ -22,17 +22,17 @@ public class BubbleSort {
         do {
             swapped = false;
             for (int i = 1; i < n; i++) {
-                if (arr[i-1] >arr[i]) {
+                if (arr[i - 1] > arr[i]) {
                     SortTestHelper.swap(arr, i, i - 1);
                     swapped = true;
                 }
             }
             n--;
-        }while (swapped);
+        } while (swapped);
     }
 
     public static void main(String[] args) {
-        int N = 200;
+        int N = 2000;
         Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 10000);
 
         System.out.println("排序前的数组为：");
