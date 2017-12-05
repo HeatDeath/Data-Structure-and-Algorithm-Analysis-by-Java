@@ -35,7 +35,7 @@ public class QuickSortTwoWays {
         // arr[l+1...i) <= v; arr(j...r] >= v
         int i = l + 1, j = r;
 
-        while (true) {
+        while (i<=j) {
             // 注意这里的边界, arr[i].compareTo(v) < 0, 不能是arr[i].compareTo(v) <= 0
             while (i <= r && arr[i].compareTo(temp) < 0) {
                 i++;
@@ -60,7 +60,7 @@ public class QuickSortTwoWays {
     }
 
     public static void main(String[] args) {
-        int N = 8000;
+        int N = 20000;
         Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 100000);
 
         System.out.println("排序前的数组为：");

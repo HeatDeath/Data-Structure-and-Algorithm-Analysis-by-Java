@@ -22,7 +22,6 @@ public class MaxHeap {
         int n = arr.length;
         data = new Integer[n+1];
         capacity = n;
-
         for (int i =0; i<n;i++){
             data[i+1] = arr[i];
         }
