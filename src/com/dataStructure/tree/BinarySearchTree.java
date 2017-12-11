@@ -1,25 +1,26 @@
 package com.dataStructure.tree;
 
 import java.util.LinkedList;
+import java.util.Stack;
 
 // 二叉搜索树
 // 由于Key需要能够进行比较，所以需要extends Comparable<Key>
 public class BinarySearchTree<Key extends Comparable<Key>, Value> {
 
     // 树中的节点为私有的类，外界不需要了解二叉搜索树节点的具体实现
-    private class Node{
+    private class Node {
         private Key key;
         private Value value;
         private Node left, right;
 
-        Node(Key key, Value value){
+        Node(Key key, Value value) {
             this.key = key;
             this.value = value;
             this.left = null;
             this.right = null;
         }
 
-        Node(Node node){
+        Node(Node node) {
             this.key = node.key;
             this.value = node.value;
             this.left = node.left;
@@ -142,13 +143,13 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     }
 
     // 中序遍历二叉搜索树
-    public void inOrder(){
+    public void inOrder() {
         inOrder(root);
     }
 
     // 对以 node 为根的二叉搜索树进行中序遍历，递归算法
-    private void inOrder(Node node){
-        if (node != null){
+    private void inOrder(Node node) {
+        if (node != null) {
             inOrder(node.left);
             System.out.println(node.value);
             inOrder(node.right);
@@ -156,13 +157,13 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     }
 
     // 后序遍历二叉搜索树
-    public void postOrder(){
+    public void postOrder() {
         postOrder(root);
     }
 
     // 对以 node 为根的二叉搜索树进行后序遍历，递归算法
-    private void postOrder(Node node){
-        if (node != null){
+    private void postOrder(Node node) {
+        if (node != null) {
             postOrder(node.left);
             postOrder(node.right);
             System.out.println(node.value);
@@ -170,10 +171,84 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     }
 
     // --------------------------------------------------------------------
+    // 深度优先遍历（非递归的实现）
+
+    // 先序遍历二叉搜索树
+    public void preOrderNoRecursive() {
+        preOrderNoRecursive(root);
+    }
+
+    // 对以node为根的二叉搜索树进行前序遍历, 递归算法
+    private void preOrderNoRecursive(Node node) {
+        Stack<Node> stack = new Stack<>();
+        while (node != null || !stack.isEmpty()) {
+            while (node != null) {
+                System.out.println(node.value);
+                stack.push(node);
+                node = node.left;
+            }
+            if (!stack.isEmpty()) {
+                node = stack.pop();
+
+            }
+        }
+    }
+
+    // 中序遍历二叉搜索树
+    public void inOrderNoRecursive() {
+        inOrderNoRecursive(root);
+    }
+
+    // 对以 node 为根的二叉搜索树进行中序遍历，递归算法
+    private void inOrderNoRecursive(Node node) {
+        Stack<Node> stack = new Stack<>();
+        while (node != null || !stack.isEmpty()) {
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+            if (!stack.isEmpty()) {
+                node = stack.pop();
+                System.out.println(node.value);
+                node = node.right;
+            }
+        }
+    }
+
+    // 后序遍历二叉搜索树
+    public void postOrderNoRecursive() {
+        postOrderNoRecursive(root);
+    }
+
+    // 对以 node 为根的二叉搜索树进行后序遍历，递归算法
+    private void postOrderNoRecursive(Node node) {
+        Stack<Node> stack = new Stack<>();
+        Stack<Integer> flag_stack = new Stack<>();
+        final int flag = 1;
+        while (node != null || !stack.isEmpty()) {
+            while (node != null) {
+                stack.push(node);
+                flag_stack.push(0);
+                node = node.left;
+            }
+            while (!stack.isEmpty() && flag_stack.peek().equals(flag)){
+                flag_stack.pop();
+                System.out.println(stack.pop().value);
+            }
+            if (!stack.isEmpty()){
+                flag_stack.pop();
+                flag_stack.push(1);
+                node = stack.peek();
+                node = node.right;
+            }
+        }
+    }
+
+    // --------------------------------------------------------------------
     // 广度优先遍历
 
     // 二叉搜索树的层序遍历（广度优先）
-    public void levelOrder(){
+    public void levelOrder() {
         // 使用LinkedList来作为我们的队列
         LinkedList<Node> q = new LinkedList<>();
         q.add(root);
@@ -189,17 +264,30 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         }
     }
 
+    // 计算二叉树的深度
+    public int getDepth() {
+        return getDepth(root);
+    }
+
+    private int getDepth(Node node) {
+        if (node == null)
+            return 0;
+        int left = getDepth(node.left);
+        int right = getDepth(node.right);
+        return left > right ? left + 1 : right + 1;
+    }
+
     // --------------------------------------------------------------------
     // 搜索 最小节点操作
 
     // 寻找二叉搜索树的最小 key
-    public Key minimum(){
+    public Key minimum() {
         Node minNode = minimum(root);
         return minNode.key;
     }
 
     // 返回以node为根的二叉搜索树的最小键值所在的节点
-    private Node minimum(Node node){
+    private Node minimum(Node node) {
         if (node.left == null) return node;
         return minimum(node.left);
     }
@@ -208,16 +296,16 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     // 移除 最小节点操作
 
     // 移除二叉搜索树中最小 key 节点
-    public void removeMin(){
+    public void removeMin() {
         if (root != null)
             root = removeMin(root);
     }
 
     // 删除掉以node为根的二叉搜索树中的最小节点
     // 返回删除节点后新的二叉搜索树的根
-    private Node removeMin(Node node){
+    private Node removeMin(Node node) {
         // 递归到底，获取到二叉搜索树 key 最小的节点
-        if (node.left == null){
+        if (node.left == null) {
 
             // 保存此节点的 右子节点
             Node rightNode = node.right;
@@ -238,13 +326,13 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     // 搜索 最大节点操作
 
     // 寻找二叉搜索树的最大 key
-    public Key maximum(){
+    public Key maximum() {
         Node maxNode = maximum(root);
         return maxNode.key;
     }
 
     // 返回以node为根的二叉搜索树的最大键值所在的节点
-    private Node maximum(Node node){
+    private Node maximum(Node node) {
         if (node.right == null) return node;
         return maximum(node.right);
     }
@@ -253,16 +341,16 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     // 移除 最大节点操作
 
     // 从二分搜索树中删除最大值所在节点
-    public void removeMax(){
+    public void removeMax() {
         if (root != null)
             root = removeMax(root);
     }
 
     // 删除掉以node为根的二叉搜索树中的最大节点
     // 返回删除节点后新的二叉搜索树的根
-    private Node removeMax(Node node){
+    private Node removeMax(Node node) {
         // 递归到底，获取到二叉搜索树 key 最大的节点
-        if (node.right == null){
+        if (node.right == null) {
             // 保存该节点的 左子节点
             Node leftNode = node.left;
             // 删除该节点
@@ -277,26 +365,26 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
 
     // --------------------------------------------------------------------
     // 移除 指定 key 的节点操作
-    public void remove(Key key){
+    public void remove(Key key) {
         root = remove(root, key);
     }
 
     // 删除掉以node为根的二分搜索树中键值为key的节点, 递归算法
     // 返回删除节点后新的二分搜索树的根
-    private Node remove(Node node, Key key){
+    private Node remove(Node node, Key key) {
         if (node == null)
             return null;
 
-        if (key.compareTo(node.key) < 0){
+        if (key.compareTo(node.key) < 0) {
             node.left = remove(node.left, key);
             return node;
-        }else if (key.compareTo(node.key) > 0){
+        } else if (key.compareTo(node.key) > 0) {
             node.right = remove(node.right, key);
             return node;
-        }else { // key = node.key
+        } else { // key = node.key
 
             // 待删除节点 左子树 为空
-            if (node.left == null){
+            if (node.left == null) {
 
                 // 存储 右子树
                 Node rightNode = node.right;
@@ -310,7 +398,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
             }
 
             // 待删除节点 右子树 为空
-            if (node.right == null){
+            if (node.right == null) {
                 // 存储 左子树
                 Node leftNode = node.left;
 
@@ -346,7 +434,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     // --------------------------------------------------------------------
     // 查找 key 的前驱
 
-    public Key predecessor(Key key){
+    public Key predecessor(Key key) {
 
         // 在二叉搜索树中查找 key 对应的节点
         Node node = search(root, key);
@@ -367,21 +455,21 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
 
     // 在以node为根的二叉搜索树中, 寻找key的祖先中,比key小的最大值所在节点, 递归算法
     // 算法调用前已保证key存在在以node为根的二叉树中
-    private Node predecessorFromAncestor(Node node, Key key){
+    private Node predecessorFromAncestor(Node node, Key key) {
         if (key.compareTo(node.key) == 0)
             return null;
         Node maxNode;
-        if (key.compareTo(node.key) < 0){
+        if (key.compareTo(node.key) < 0) {
             // 如果当前节点 > key，则当前节点不可能是比 key 小的最大值
             // 向下搜索到的结果直接返回
             return predecessorFromAncestor(node.left, key);
-        }else { // key > node.key
+        } else { // key > node.key
             // 如果当前节点 < key，则当前节点可能是比 key 小的最大值
             // 向下搜索结果存储到 maxNode 中
             maxNode = predecessorFromAncestor(node.right, key);
             if (maxNode != null)
                 // maxNode 和当前节点 node 取最大值返回
-                return maxNode.key.compareTo(node.key) > 0 ? maxNode: node;
+                return maxNode.key.compareTo(node.key) > 0 ? maxNode : node;
             else
                 // maxNode 为，返回 node
                 return node;
@@ -393,7 +481,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
 
     // 查找key的后继, 递归算法
     // 如果不存在key的后继(key不存在, 或者key是整棵二叉树中的最大值), 则返回 null
-    public Key successor(Key key){
+    public Key successor(Key key) {
         Node node = search(root, key);
 
         // 如果key所在的节点不存在, 则key没有前驱, 返回 null
@@ -411,16 +499,16 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
 
     // 在以node为根的二叉搜索树中, 寻找key的祖先中,比key大的最小值所在节点, 递归算法
     // 算法调用前已保证key存在在以node为根的二叉树中
-    private Node successorFromAncestor(Node node, Key key){
-        if (key.compareTo(node.key) == 0){
+    private Node successorFromAncestor(Node node, Key key) {
+        if (key.compareTo(node.key) == 0) {
             return null;
         }
         Node minNode = null;
-        if (key.compareTo(node.key) > 0 ){
+        if (key.compareTo(node.key) > 0) {
             // 如果当前节点小于key, 则当前节点不可能是比key大的最小值
             // 向下搜索到的结果直接返回
             return successorFromAncestor(node.right, key);
-        }else { // key < node.key
+        } else { // key < node.key
             // 如果当前节点大于key, 则当前节点有可能是比key大的最小值
             // 向下搜索结果存储到minNode中
             minNode = successorFromAncestor(node.left, key);
@@ -436,7 +524,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
 
     // 测试二叉搜索树
     public static void main(String[] args) {
-        int N = 1000000;
+        int N = 10;
 
         // 创建一个数组
         Integer[] arr = new Integer[N];
@@ -462,17 +550,18 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
             bst.insert(arr[i], Integer.toString(arr[i]));
         }
 
-        // 对[0...2*N]的所有整型测试在二叉搜索树中搜索
-        // 若 i 在 [0...N) 之间，则能搜索到整型所对应的字符串
-        // 若 i 在 [N...2*N) 之间，则结果为 null
-        for (int i = 0; i < 2 * N; i++) {
-            String res = bst.search(i);
-            String test = Integer.toString(i);
-            if (i < N)
-                if (res.equals(test))
-                    System.out.println("I get it!");
-                else if (res.equals(null))
-                    System.out.println("Not find!");
-        }
+//        // 对[0...2*N]的所有整型测试在二叉搜索树中搜索
+//        // 若 i 在 [0...N) 之间，则能搜索到整型所对应的字符串
+//        // 若 i 在 [N...2*N) 之间，则结果为 null
+//        for (int i = 0; i < 2 * N; i++) {
+//            String res = bst.search(i);
+//            String test = Integer.toString(i);
+//            if (i < N)
+//                if (res.equals(test))
+//                    System.out.println("I get it!");
+//                else if (res.equals(null))
+//                    System.out.println("Not find!");
+//        }
+        bst.postOrderNoRecursive();
     }
 }
