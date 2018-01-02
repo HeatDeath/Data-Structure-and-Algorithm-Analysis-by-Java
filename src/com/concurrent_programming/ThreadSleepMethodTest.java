@@ -22,7 +22,9 @@ public class ThreadSleepMethodTest {
                 System.out.println("i:"+i);
                 try {
                     System.out.println("线程"+Thread.currentThread().getName()+"进入睡眠状态");
-                    Thread.currentThread().sleep(1000);
+                    Thread.currentThread().sleep(10);
+                    Thread.currentThread().yield();
+
                 } catch (InterruptedException e) {
                     // TODO: handle exception
                 }
