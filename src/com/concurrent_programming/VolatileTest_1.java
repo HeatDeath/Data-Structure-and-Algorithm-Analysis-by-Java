@@ -1,10 +1,14 @@
 package com.concurrent_programming;
 
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class VolatileTest_1 {
-    public volatile int inc = 0;
+    public AtomicInteger inc = new AtomicInteger();
 
     public void increase() {
-        inc++;
+            inc.getAndIncrement();
     }
 
     public static void main(String[] args) {
